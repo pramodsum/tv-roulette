@@ -36,7 +36,7 @@ export type Network = {
 };
 
 export type Episode = {
-  air_date: string[];
+  air_date: string;
   episode_number: number;
   id: number;
   name: string;
@@ -76,7 +76,7 @@ export type SeriesDetail = {
   id: number;
   in_production: boolean;
   languages: string[];
-  last_air_date: string[];
+  last_air_date: string;
   last_episode_to_air: Episode;
   name: "Westworld";
   next_episode_to_air: Episode;

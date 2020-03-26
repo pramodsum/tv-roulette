@@ -1,12 +1,10 @@
 import React from "react";
 import {
   CircularProgress as MaterialCircularProgress,
-  CircularProgressProps,
   Box,
   withStyles,
   createStyles,
-  fade,
-  Typography
+  fade
 } from "@material-ui/core";
 import styled from "@emotion/styled";
 
@@ -27,6 +25,7 @@ const Percent = styled(Box)`
   margin-top: 18px;
   margin-left: 15px;
   letter-spacing: -1.5px;
+  color: white;
 `;
 
 const CircularProgress = withStyles(() =>
@@ -44,26 +43,55 @@ const CircularProgress = withStyles(() =>
     },
     colorPrimary: {
       border: `4px solid ${fade("#fff", 0.1)}`
-    },
-    barColorPrimary: {
-      backgroundColor: "alicepurple"
     }
   })
 )(MaterialCircularProgress);
 
-const CircularRating: React.FC<{ voteAverage: number }> = ({ voteAverage }) => (
-  <ProgressContainer display="flex" ml={2}>
-    <Percent>
-      {voteAverage}
-      <Box fontSize="x-small">%</Box>
-    </Percent>
-    <CircularProgress
-      variant="static"
-      size="60px"
-      thickness={4}
-      value={voteAverage}
-    />
-  </ProgressContainer>
+const CircularRating: React.FC<{
+  voteAverage: number;
+  prependSubtitle?: boolean;
+}> = ({ voteAverage, prependSubtitle }) => (
+  <Box display="flex" alignItems="center">
+    {prependSubtitle && (
+      <Box
+        ml={1}
+        fontSize="16px"
+        lineHeight={1}
+        fontWeight="bolder"
+        letterSpacing="-.5px"
+        maxWidth="50px"
+        height="100%"
+        textAlign="right"
+      >
+        User Score
+      </Box>
+    )}
+    <ProgressContainer display="flex" ml={prependSubtitle ? 1 : 2}>
+      <Percent>
+        {voteAverage}
+        <Box fontSize="x-small">%</Box>
+      </Percent>
+      <CircularProgress
+        variant="static"
+        size="60px"
+        thickness={4}
+        value={voteAverage}
+      />
+    </ProgressContainer>
+    {!prependSubtitle && (
+      <Box
+        ml={1}
+        fontSize="16px"
+        lineHeight={1}
+        fontWeight="bolder"
+        letterSpacing="-.5px"
+        maxWidth="50px"
+        height="100%"
+      >
+        User Score
+      </Box>
+    )}
+  </Box>
 );
 
 export default CircularRating;

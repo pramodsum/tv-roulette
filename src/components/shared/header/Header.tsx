@@ -41,6 +41,7 @@ const Header: React.FC = () => {
             color="inherit"
             aria-label="menu"
             className={classes.title}
+            href="/"
           >
             <LiveTvIcon fontSize="large" />
           </IconButton>
