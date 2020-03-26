@@ -21,15 +21,14 @@ const ShowCard: React.FC<Series> = props => (
           title={props.name}
         />
         <CardContent>
-          <Box display="flex">
+          <Box display="flex" justifyContent="space-between">
             <Typography gutterBottom variant="h5" component="h2">
               {props.name}
             </Typography>
             <Chip
-              size="small"
-              color="secondary"
+              color="primary"
               style={{ marginTop: "2px", marginLeft: "6px" }}
-              label={props.vote_average}
+              label={`${props.vote_average * 10}%`}
             />
           </Box>
         </CardContent>
