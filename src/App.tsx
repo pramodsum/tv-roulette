@@ -23,7 +23,7 @@ export default () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <>TESTING</>
-      <BrowserRouter basename="/tv-roulette">
+      <BrowserRouter>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/:seriesId" component={ShowPage} />

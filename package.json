@@ -1,6 +1,6 @@
 {
   "name": "tv-roulette",
-  "homepage": "https://pramodsum.github.io/tv-roulette",
+  "homepage": "https://tv-roulette.surge.sh",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -21,11 +21,13 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "surge": "^0.21.3",
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build",
+    "predeploy": "yarn build",
+    "gh-deploy": "yarn predeploy && gh-pages -d build",
+    "deploy": "surge",
     "dev": "API_KEY=5c79f5aa81b00c7995fd908b3b13913e react-scripts start",
     "start": "yarn dev",
     "build": "react-scripts build",
