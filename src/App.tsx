@@ -3,7 +3,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { Route, BrowserRouter } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
-import Home from "./components/Home";
+import HomePage from "./components/pages/HomePage";
+import ShowPage from "./components/pages/ShowPage";
 
 export default () => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -23,9 +24,9 @@ export default () => {
       <CssBaseline />
       <>TESTING</>
       <BrowserRouter>
-        <Route path="/" component={Home} />
-        <Route path="/:seriesId" component={Home} />
-        <Route path="/:seriesId/episode/:episodeId" component={Home} />
+        <Route path="/:seriesId" component={ShowPage} />
+        <Route exact path="/" component={HomePage} />
+        {/* <Route path="/:seriesId/episode/:episodeId" component={HomePage} /> */}
       </BrowserRouter>
       {/* <Routes /> */}
     </ThemeProvider>
