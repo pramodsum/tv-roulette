@@ -17,7 +17,7 @@ const ShowCard: React.FC<Series> = props => (
     <Card>
       <CardActionArea>
         <Link
-          to={`/${props.id}`}
+          to={`/show/${props.id}`}
           style={{ textDecoration: "none", color: "black" }}
         >
           <CardMedia
