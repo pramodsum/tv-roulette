@@ -26,7 +26,8 @@
   "scripts": {
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
-    "start": "API_KEY=5c79f5aa81b00c7995fd908b3b13913e react-scripts start",
+    "dev": "API_KEY=5c79f5aa81b00c7995fd908b3b13913e react-scripts start",
+    "start": "yarn dev",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },

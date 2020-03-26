@@ -75,8 +75,7 @@ const ShowPage: React.FC = () => {
     };
   };
 
-  React.useEffect(() => {
-    if (!showInfo) return;
+  const fetchNextRandomEpisode = () => {
     const { season, episodeNumber } = getRandomEpisode();
 
     if (!season || !episodeNumber) return;
@@ -86,6 +85,11 @@ const ShowPage: React.FC = () => {
     )
       .then(res => res.json())
       .then(res => updateRandomEpisode(res.episodes[episodeNumber]));
+  };
+
+  React.useEffect(() => {
+    if (!showInfo) return;
+    fetchNextRandomEpisode();
     // eslint-disable-next-line
   }, [selectedSeasons]);
 
@@ -115,7 +119,12 @@ const ShowPage: React.FC = () => {
                 </ToggleButtonGroup>
               </Typography>
               <Box>
-                <Button variant="contained" color="secondary" size="large">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  onClick={() => fetchNextRandomEpisode()}
+                >
                   Find Another Episode
                 </Button>
               </Box>
