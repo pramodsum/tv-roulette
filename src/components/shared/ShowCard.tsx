@@ -14,7 +14,7 @@ import { Series } from "../../declarations/types";
 const ShowCard: React.FC<Series> = props => (
   <Box width="30%" my={1}>
     <Card>
-      <CardActionArea href={`/${props.id}`}>
+      <CardActionArea href={`/tv-roulette/${props.id}`}>
         <CardMedia
           style={{ height: "140px" }}
           image={`https://image.tmdb.org/t/p/w500_and_h282_face${props.poster_path}`}

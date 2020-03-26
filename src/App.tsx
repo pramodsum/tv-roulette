@@ -1,7 +1,7 @@
 import React from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 import HomePage from "./components/pages/HomePage";
 import ShowPage from "./components/pages/ShowPage";
@@ -23,10 +23,12 @@ export default () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <>TESTING</>
-      <BrowserRouter>
-        <Route path="/:seriesId" component={ShowPage} />
-        <Route exact path="/" component={HomePage} />
-        {/* <Route path="/:seriesId/episode/:episodeId" component={HomePage} /> */}
+      <BrowserRouter basename="/tv-roulette">
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/:seriesId" component={ShowPage} />
+          {/* <Route path="/:seriesId/episode/:episodeId" component={HomePage} /> */}
+        </Switch>
       </BrowserRouter>
       {/* <Routes /> */}
     </ThemeProvider>
