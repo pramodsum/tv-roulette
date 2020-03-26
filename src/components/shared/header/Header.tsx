@@ -9,6 +9,7 @@ import {
   Toolbar
 } from "@material-ui/core";
 import LiveTvIcon from "@material-ui/icons/LiveTv";
+import { Link } from "react-router-dom";
 
 // import Search from "./Search";
 
@@ -41,9 +42,13 @@ const Header: React.FC = () => {
             color="inherit"
             aria-label="menu"
             className={classes.title}
-            href="/"
           >
-            <LiveTvIcon fontSize="large" />
+            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+              <Box display="flex" alignItems="center">
+                <LiveTvIcon fontSize="large" />
+                <Box ml={1}>TV Roulette</Box>
+              </Box>
+            </Link>
           </IconButton>
           {/* <Search /> */}
         </Box>
