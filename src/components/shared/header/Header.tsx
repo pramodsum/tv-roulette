@@ -1,60 +1,35 @@
 import React from "react";
-import {
-  AppBar,
-  IconButton,
-  makeStyles,
-  createStyles,
-  Theme,
-  Box,
-  Toolbar
-} from "@material-ui/core";
+import { AppBar, IconButton, Box, Toolbar } from "@material-ui/core";
 import LiveTvIcon from "@material-ui/icons/LiveTv";
 import { Link } from "react-router-dom";
 
-// import Search from "./Search";
+import AutocompleteInput from "./AutocompleteInput";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      display: "none",
-      [theme.breakpoints.up("sm")]: {
-        display: "block"
-      }
-    }
-  })
-);
-
-const Header: React.FC = () => {
-  const classes = useStyles();
-
-  return (
-    <AppBar>
-      <Toolbar>
-        <Box
-          maxWidth="1000px"
-          display="flex"
-          width="100%"
-          justifyContent="space-between"
-          mx="auto"
-        >
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            className={classes.title}
-          >
-            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-              <Box display="flex" alignItems="center">
-                <LiveTvIcon fontSize="large" />
-                <Box ml={1}>TV Roulette</Box>
+const Header: React.FC = () => (
+  <AppBar>
+    <Toolbar>
+      <Box
+        maxWidth="1000px"
+        display="flex"
+        width="100%"
+        justifyContent="space-between"
+        alignItems="center"
+        mx="auto"
+      >
+        <IconButton edge="start" color="inherit" aria-label="menu">
+          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            <Box display="flex" alignItems="center" mt={["-2px", 0]}>
+              <LiveTvIcon fontSize="large" />
+              <Box ml={1} display={["none", "block"]}>
+                TV Roulette
               </Box>
-            </Link>
-          </IconButton>
-          {/* <Search /> */}
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
-};
+            </Box>
+          </Link>
+        </IconButton>
+        <AutocompleteInput />
+      </Box>
+    </Toolbar>
+  </AppBar>
+);
 
 export default Header;

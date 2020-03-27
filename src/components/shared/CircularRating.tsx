@@ -28,7 +28,7 @@ const Percent = styled(Box)`
   color: white;
 `;
 
-const CircularProgress = withStyles(() =>
+const CircularProgress = withStyles(
   createStyles({
     root: {
       borderRadius: "100%",

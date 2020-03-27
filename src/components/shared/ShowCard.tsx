@@ -13,7 +13,7 @@ import { Series } from "../../declarations/types";
 import { Link } from "react-router-dom";
 
 const ShowCard: React.FC<Series> = props => (
-  <Box width="30%" my={1}>
+  <Box width={["100%", "30%"]} my={1}>
     <Card>
       <CardActionArea>
         <Link

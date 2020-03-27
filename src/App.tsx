@@ -22,7 +22,6 @@ export default () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <>TESTING</>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={HomePage} />

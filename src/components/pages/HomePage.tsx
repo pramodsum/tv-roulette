@@ -24,6 +24,7 @@ const HomePage: React.FC = () => {
         px={5}
         maxWidth="1000px"
         mx="auto"
+        mt={3}
       >
         <Box display="flex" justifyContent="space-between">
           <Typography variant="h5">Trending Shows</Typography>
