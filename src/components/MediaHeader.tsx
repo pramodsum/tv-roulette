@@ -1,8 +1,15 @@
 import React from "react";
-import { CardMedia, Box, Typography, Chip } from "@material-ui/core";
+import {
+  CardMedia,
+  Box,
+  Typography,
+  Chip,
+  IconButton
+} from "@material-ui/core";
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
 import RelativeTime from "dayjs/plugin/relativeTime";
+import HeartIcon from "@material-ui/icons/Favorite";
 
 import { SeriesDetail } from "../declarations/types";
 import CircularRating from "./shared/CircularRating";
@@ -27,7 +34,6 @@ const MediaContainer = styled(CardMedia)({
 });
 
 const PosterContainer = styled(Box)`
-  display: block;
   box-sizing: border-box;
   position: relative;
   z-index: 2;
@@ -60,6 +66,7 @@ const Detail: React.FC<{ title: string; value: string }> = ({
 );
 
 const MediaHeader: React.FC<SeriesDetail> = ({
+  id,
   name,
   vote_average,
   genres,
@@ -70,11 +77,21 @@ const MediaHeader: React.FC<SeriesDetail> = ({
 }) => {
   dayjs.extend(RelativeTime);
 
+  const favoriteShow = () => {
+    // const storedJson = window.localStorage.getItem("tv-roulette");
+    // const savedShows = storedJson ? JSON.parse(storedJson) : [];
+    // const updatedShowList =
+    //   savedShows.indexOf(id) === -1
+    //     ? savedShows.filter((showId: number) => id === showId)
+    //     : [...savedShows, id];
+    // window.localStorage.setItem("tv-roulette", JSON.stringify(updatedShowList));
+  };
+
   return (
     <MediaContainer>
       <Box maxWidth="1000px" mx="auto" pt="40px" pb="40px" zIndex={0}>
         <Box display="flex" alignItems="flex-start" flexWrap="nowrap">
-          <PosterContainer>
+          <PosterContainer display={["none", "block"]}>
             <Box width="100%" height="100%">
               <Poster
                 srcSet={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${poster_path} 1x, https://image.tmdb.org/t/p/w600_and_h900_bestv2${poster_path} 2x`}
@@ -86,7 +103,7 @@ const MediaHeader: React.FC<SeriesDetail> = ({
             flexDirection="column"
             color="white"
             maxWidth="700px"
-            pl="40px"
+            pl={[0, "40px"]}
           >
             <Typography variant="h2">
               <Box
@@ -99,7 +116,33 @@ const MediaHeader: React.FC<SeriesDetail> = ({
                 fontWeight="900"
               >
                 {name}
-                <CircularRating voteAverage={vote_average * 10} />
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  width={["100%", "auto"]}
+                >
+                  <CircularRating voteAverage={vote_average * 10} />
+                  {/* <IconButton
+                    style={{ marginRight: "5px" }}
+                    onClick={favoriteShow}
+                  >
+                    <Box
+                      mx={1}
+                      fontSize="16px"
+                      lineHeight={1}
+                      fontWeight="bolder"
+                      letterSpacing="-.5px"
+                      maxWidth="75px"
+                      height="100%"
+                      textAlign="right"
+                      color="white"
+                    >
+                      Like this show?
+                    </Box>
+                    <HeartIcon fontSize="large" color="secondary" />
+                  </IconButton> */}
+                </Box>
               </Box>
             </Typography>
             <Box mb={2} display="flex">

@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 
 const EpisodeCard: React.FC<Episode> = props => (
   <Card>
-    <Box display="flex" flexDirection="row-reverse">
+    <Box display="flex" flexDirection={["column", "row-reverse"]}>
       {props.still_path && (
         <CardMedia
           component="img"

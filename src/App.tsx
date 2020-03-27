@@ -1,7 +1,7 @@
 import React from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { Route, BrowserRouter, Switch, useLocation } from "react-router-dom";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 
 import HomePage from "./components/pages/HomePage";

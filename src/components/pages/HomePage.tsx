@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../shared/layout/Layout";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Divider } from "@material-ui/core";
 import { Series } from "../../declarations/types";
 import { API_KEY, API_URL_BASE } from "../../declarations/constants";
 import ShowCard from "../shared/ShowCard";
@@ -9,6 +9,15 @@ import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab";
 const HomePage: React.FC = () => {
   const [trendingShows, updateTrendingShows] = React.useState<Series[]>([]);
   const [timeFrame, toggleTimeFrame] = React.useState<"day" | "week">("week");
+  const [savedShows, updateSavedShows] = React.useState<Series[]>([]);
+
+  React.useEffect(() => {
+    // const storedJson = window.localStorage.getItem("tv-roulette");
+    // const savedShowIds = storedJson ? JSON.parse(storedJson) : [];
+    // savedShowIds.forEach((showId: number) => {
+    //   console.log(showId);
+    // });
+  }, []);
 
   React.useEffect(() => {
     fetch(`${API_URL_BASE}/trending/tv/${timeFrame}?api_key=${API_KEY}`)
@@ -26,6 +35,23 @@ const HomePage: React.FC = () => {
         mx="auto"
         mt={3}
       >
+        {savedShows.length > 0 && (
+          <Box mb={3}>
+            <Typography variant="h5">Your Favorite Shows</Typography>
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              width="100%"
+              mx="auto"
+              justifyContent="space-between"
+            >
+              {savedShows.map((show: Series) => (
+                <ShowCard key={show.id} {...show} />
+              ))}
+            </Box>
+            <Divider />
+          </Box>
+        )}
         <Box display="flex" justifyContent="space-between">
           <Typography variant="h5">Trending Shows</Typography>
           <ToggleButtonGroup
@@ -48,7 +74,7 @@ const HomePage: React.FC = () => {
           mx="auto"
           justifyContent="space-between"
         >
-          {trendingShows?.map(show => (
+          {trendingShows?.map((show: Series) => (
             <ShowCard key={show.id} {...show} />
           ))}
         </Box>

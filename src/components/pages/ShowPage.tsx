@@ -105,8 +105,12 @@ const ShowPage: React.FC = () => {
         <>
           <MediaHeader {...showInfo} />
           <Box p={3} maxWidth="1000px">
-            <Box display="flex" justifyContent="space-between">
-              <Typography variant="h6">
+            <Box
+              display="flex"
+              flexDirection={["column", "row"]}
+              justifyContent="space-between"
+            >
+              <Typography variant="h6" style={{ marginBottom: "10px" }}>
                 <Box fontWeight="bolder">Filter Seasons: </Box>
                 <ToggleButtonGroup
                   value={selectedSeasons}
