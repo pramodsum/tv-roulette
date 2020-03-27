@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import Layout from "../shared/layout/Layout";
 import MediaHeader from "../MediaHeader";
 import EpisodeCard from "../shared/EpisodeCard";
+import SimilarShows from "../SimilarShows";
 
 const getRandomInt = (max: number) =>
   Math.floor(Math.random() * Math.floor(max));
@@ -134,6 +135,7 @@ const ShowPage: React.FC = () => {
                 <EpisodeCard {...randomEpisode} />
               </Box>
             )}
+            <SimilarShows seriesId={showInfo.id} />
           </Box>
         </>
       )}
