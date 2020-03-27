@@ -75,7 +75,13 @@ const AutocompleteInput: React.FC = () => {
       )
         .then((res: any) => res.json())
         .then((res: any) => {
-          setOptions(res.results);
+          setOptions(
+            res.results.sort((show1: Series, show2: Series) => {
+              if (show1.popularity < show2.popularity) return -1;
+              if (show1.popularity > show2.popularity) return 1;
+              return 0;
+            })
+          );
         });
     }, 500),
     [input]
