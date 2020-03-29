@@ -1,17 +1,10 @@
 import React from "react";
-import {
-  CardMedia,
-  Box,
-  Typography,
-  Chip,
-  IconButton
-} from "@material-ui/core";
+import { CardMedia, Box, Typography, Chip } from "@material-ui/core";
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
 import RelativeTime from "dayjs/plugin/relativeTime";
-import HeartIcon from "@material-ui/icons/Favorite";
 
-import { SeriesDetail } from "../declarations/types";
+import { SeriesDetail } from "../declarations/moviedb-types";
 import CircularRating from "./shared/CircularRating";
 
 const MediaContainer = styled(CardMedia)({
@@ -66,7 +59,6 @@ const Detail: React.FC<{ title: string; value: string }> = ({
 );
 
 const MediaHeader: React.FC<SeriesDetail> = ({
-  id,
   name,
   vote_average,
   genres,
@@ -76,16 +68,6 @@ const MediaHeader: React.FC<SeriesDetail> = ({
   poster_path
 }) => {
   dayjs.extend(RelativeTime);
-
-  const favoriteShow = () => {
-    // const storedJson = window.localStorage.getItem("tv-roulette");
-    // const savedShows = storedJson ? JSON.parse(storedJson) : [];
-    // const updatedShowList =
-    //   savedShows.indexOf(id) === -1
-    //     ? savedShows.filter((showId: number) => id === showId)
-    //     : [...savedShows, id];
-    // window.localStorage.setItem("tv-roulette", JSON.stringify(updatedShowList));
-  };
 
   return (
     <MediaContainer>
@@ -123,25 +105,6 @@ const MediaHeader: React.FC<SeriesDetail> = ({
                   width={["100%", "auto"]}
                 >
                   <CircularRating voteAverage={vote_average * 10} />
-                  {/* <IconButton
-                    style={{ marginRight: "5px" }}
-                    onClick={favoriteShow}
-                  >
-                    <Box
-                      mx={1}
-                      fontSize="16px"
-                      lineHeight={1}
-                      fontWeight="bolder"
-                      letterSpacing="-.5px"
-                      maxWidth="75px"
-                      height="100%"
-                      textAlign="right"
-                      color="white"
-                    >
-                      Like this show?
-                    </Box>
-                    <HeartIcon fontSize="large" color="secondary" />
-                  </IconButton> */}
                 </Box>
               </Box>
             </Typography>

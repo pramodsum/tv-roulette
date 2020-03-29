@@ -7,7 +7,7 @@ import {
   Box
 } from "@material-ui/core";
 
-import { Episode } from "../../declarations/types";
+import { Episode } from "../../declarations/moviedb-types";
 import CircularRating from "./CircularRating";
 import dayjs from "dayjs";
 

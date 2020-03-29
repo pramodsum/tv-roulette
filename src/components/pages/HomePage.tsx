@@ -1,29 +1,21 @@
 import React from "react";
+import { Box, Typography } from "@material-ui/core";
+
 import Layout from "../shared/layout/Layout";
-import { Box, Typography, Divider } from "@material-ui/core";
-import { Series } from "../../declarations/types";
-import { API_KEY, API_URL_BASE } from "../../declarations/constants";
-import ShowCard from "../shared/ShowCard";
-import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab";
+import ShowList from "../shared/ShowList";
+import FilterToggleGroup from "../shared/FilterToggleGroup";
+import TimeSlider from "../shared/TimeSlider";
+import { FilterObj, TimeFrame } from "../../declarations/types";
+
+const FILTERS: FilterObj[] = [
+  { filter: "watched", title: "Most Watched" },
+  { filter: "popular", title: "Popular" },
+  { filter: "trending", title: "Trending" }
+];
 
 const HomePage: React.FC = () => {
-  const [trendingShows, updateTrendingShows] = React.useState<Series[]>([]);
-  const [timeFrame, toggleTimeFrame] = React.useState<"day" | "week">("week");
-  const [savedShows, updateSavedShows] = React.useState<Series[]>([]);
-
-  React.useEffect(() => {
-    // const storedJson = window.localStorage.getItem("tv-roulette");
-    // const savedShowIds = storedJson ? JSON.parse(storedJson) : [];
-    // savedShowIds.forEach((showId: number) => {
-    //   console.log(showId);
-    // });
-  }, []);
-
-  React.useEffect(() => {
-    fetch(`${API_URL_BASE}/trending/tv/${timeFrame}?api_key=${API_KEY}`)
-      .then(res => res.json())
-      .then(res => updateTrendingShows(res.results));
-  }, [timeFrame]);
+  const [filterIndex, toggleFilterIndex] = React.useState<number>(0);
+  const [timeFrame, toggleTimeFrame] = React.useState<TimeFrame>("All");
 
   return (
     <Layout>
@@ -35,49 +27,24 @@ const HomePage: React.FC = () => {
         mx="auto"
         mt={3}
       >
-        {savedShows.length > 0 && (
-          <Box mb={3}>
-            <Typography variant="h5">Your Favorite Shows</Typography>
-            <Box
-              display="flex"
-              flexWrap="wrap"
-              width="100%"
-              mx="auto"
-              justifyContent="space-between"
-            >
-              {savedShows.map((show: Series) => (
-                <ShowCard key={show.id} {...show} />
-              ))}
-            </Box>
-            <Divider />
+        <Typography variant="h3">
+          <Box fontWeight="bolder" my={2}>
+            {FILTERS[filterIndex].title} Shows
           </Box>
-        )}
-        <Box display="flex" justifyContent="space-between">
-          <Typography variant="h5">Trending Shows</Typography>
-          <ToggleButtonGroup
-            exclusive
-            value={timeFrame}
-            onChange={(_e, newTimeFrame) => toggleTimeFrame(newTimeFrame)}
-          >
-            <ToggleButton value="day">
-              <Box mx={1}>Day</Box>
-            </ToggleButton>
-            <ToggleButton value="week">
-              <Box mx={1}>Week</Box>
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
+        </Typography>
         <Box
           display="flex"
-          flexWrap="wrap"
-          width="100%"
-          mx="auto"
+          flexDirection={["column", "row"]}
           justifyContent="space-between"
+          mb={2}
         >
-          {trendingShows?.map((show: Series) => (
-            <ShowCard key={show.id} {...show} />
-          ))}
+          <FilterToggleGroup
+            filterIndex={filterIndex}
+            toggleFilterIndex={toggleFilterIndex}
+          />
+          <TimeSlider toggleTimeFrame={toggleTimeFrame} />
         </Box>
+        <ShowList filter={FILTERS[filterIndex].filter} timeFrame={timeFrame} />
       </Box>
     </Layout>
   );

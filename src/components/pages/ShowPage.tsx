@@ -2,8 +2,15 @@ import React from "react";
 import { Box, Typography, Button } from "@material-ui/core";
 import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab";
 
-import { SeriesDetail, Season, Episode } from "../../declarations/types";
-import { API_KEY, API_URL_BASE } from "../../declarations/constants";
+import {
+  SeriesDetail,
+  Season,
+  Episode
+} from "../../declarations/moviedb-types";
+import {
+  MOVIEDB_API_KEY,
+  MOVIEDB_API_URL_BASE
+} from "../../declarations/constants";
 import { useParams } from "react-router-dom";
 import Layout from "../shared/layout/Layout";
 import MediaHeader from "../MediaHeader";
@@ -27,10 +34,9 @@ const ShowPage: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    fetch(`${API_URL_BASE}/tv/${seriesId}?api_key=${API_KEY}`)
+    fetch(`${MOVIEDB_API_URL_BASE}/tv/${seriesId}?api_key=${MOVIEDB_API_KEY}`)
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         updateShowInfo(res);
         selectAllRegularSeasons(res);
       });
@@ -82,7 +88,7 @@ const ShowPage: React.FC = () => {
     if (!season || !episodeNumber) return;
 
     fetch(
-      `${API_URL_BASE}/tv/${seriesId}/season/${season.season_number}?api_key=${API_KEY}`
+      `${MOVIEDB_API_URL_BASE}/tv/${seriesId}/season/${season.season_number}?api_key=${MOVIEDB_API_KEY}`
     )
       .then(res => res.json())
       .then(res => updateRandomEpisode(res.episodes[episodeNumber]));

@@ -15,8 +15,11 @@ import matchSorter from "match-sorter";
 import throttle from "lodash/throttle";
 import { useHistory } from "react-router-dom";
 
-import { API_KEY, API_URL_BASE } from "../../../declarations/constants";
-import { Series } from "../../../declarations/types";
+import {
+  MOVIEDB_API_KEY,
+  MOVIEDB_API_URL_BASE
+} from "../../../declarations/constants";
+import { Series } from "../../../declarations/moviedb-types";
 
 const SearchIcon = withStyles(
   createStyles({
@@ -71,7 +74,7 @@ const AutocompleteInput: React.FC = () => {
       }
 
       fetch(
-        `${API_URL_BASE}/search/tv?api_key=${API_KEY}&language=en-US&include_adult=false&query=${input}`
+        `${MOVIEDB_API_URL_BASE}/search/tv?api_key=${MOVIEDB_API_KEY}&language=en-US&include_adult=false&query=${input}`
       )
         .then((res: any) => res.json())
         .then((res: any) => {

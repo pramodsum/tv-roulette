@@ -1,14 +1,19 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
-import { Series } from "../declarations/types";
+import { Series } from "../declarations/moviedb-types";
 import ShowCard from "./shared/ShowCard";
-import { API_URL_BASE, API_KEY } from "../declarations/constants";
+import {
+  MOVIEDB_API_URL_BASE,
+  MOVIEDB_API_KEY
+} from "../declarations/constants";
 
 const SimilarShows: React.FC<{ seriesId: number }> = ({ seriesId }) => {
   const [shows, updateShows] = React.useState<Series[]>([]);
 
   React.useEffect(() => {
-    fetch(`${API_URL_BASE}/tv/${seriesId}/similar?api_key=${API_KEY}`)
+    fetch(
+      `${MOVIEDB_API_URL_BASE}/tv/${seriesId}/similar?api_key=${MOVIEDB_API_KEY}`
+    )
       .then(res => res.json())
       .then(res => updateShows(res.results));
   }, [seriesId]);
@@ -28,7 +33,7 @@ const SimilarShows: React.FC<{ seriesId: number }> = ({ seriesId }) => {
         justifyContent="space-between"
       >
         {shows.map((show: Series) => (
-          <ShowCard key={show.id} {...show} />
+          <ShowCard key={show.id} showId={show.id} />
         ))}
       </Box>
     </Box>
