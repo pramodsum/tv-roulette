@@ -1,22 +1,23 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
-import { Series } from "../declarations/moviedb-types";
 import ShowCard from "./shared/ShowCard";
-import {
-  MOVIEDB_API_URL_BASE,
-  MOVIEDB_API_KEY
-} from "../declarations/constants";
+import { TRAKT_API_URL_BASE, TRAKT_API_KEY } from "../declarations/constants";
+import { TraktShow } from "../declarations/trakt-types";
 
-const SimilarShows: React.FC<{ seriesId: number }> = ({ seriesId }) => {
-  const [shows, updateShows] = React.useState<Series[]>([]);
+const SimilarShows: React.FC<{ traktId: number }> = ({ traktId }) => {
+  const [shows, updateShows] = React.useState<TraktShow[]>([]);
 
   React.useEffect(() => {
-    fetch(
-      `${MOVIEDB_API_URL_BASE}/tv/${seriesId}/similar?api_key=${MOVIEDB_API_KEY}`
-    )
+    fetch(`${TRAKT_API_URL_BASE}/shows/${traktId}/related`, {
+      headers: {
+        "Content-Type": "application/json",
+        "trakt-api-version": "2",
+        "trakt-api-key": TRAKT_API_KEY
+      }
+    })
       .then(res => res.json())
-      .then(res => updateShows(res.results));
-  }, [seriesId]);
+      .then(updateShows);
+  }, [traktId]);
 
   return (
     <Box>
@@ -32,8 +33,8 @@ const SimilarShows: React.FC<{ seriesId: number }> = ({ seriesId }) => {
         mx="auto"
         justifyContent="space-between"
       >
-        {shows.map((show: Series) => (
-          <ShowCard key={show.id} showId={show.id} />
+        {shows.map((show: TraktShow) => (
+          <ShowCard key={show.ids.trakt} traktShow={show} />
         ))}
       </Box>
     </Box>

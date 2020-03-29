@@ -41,7 +41,7 @@ const ShowList: React.FC<{
       justifyContent="space-between"
     >
       {shows?.map((show: TraktShow) => (
-        <ShowCard key={show.ids.tmdb} showId={show.ids.tmdb} />
+        <ShowCard key={show.ids.trakt} traktShow={show} />
       ))}
     </Box>
   );

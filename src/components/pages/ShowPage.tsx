@@ -9,7 +9,9 @@ import {
 } from "../../declarations/moviedb-types";
 import {
   MOVIEDB_API_KEY,
-  MOVIEDB_API_URL_BASE
+  MOVIEDB_API_URL_BASE,
+  TRAKT_API_URL_BASE,
+  TRAKT_API_KEY
 } from "../../declarations/constants";
 import { useParams } from "react-router-dom";
 import Layout from "../shared/layout/Layout";
@@ -25,6 +27,7 @@ const ShowPage: React.FC = () => {
   const [showInfo, updateShowInfo] = React.useState<SeriesDetail>();
   const [selectedSeasons, updateSelectedSeasons] = React.useState<Season[]>([]);
   const [randomEpisode, updateRandomEpisode] = React.useState<Episode>();
+  const [traktId, updateTraktId] = React.useState<number>();
 
   const selectAllRegularSeasons = React.useCallback((res: SeriesDetail) => {
     // Default select all regular seasons
@@ -41,6 +44,22 @@ const ShowPage: React.FC = () => {
         selectAllRegularSeasons(res);
       });
   }, [seriesId, selectAllRegularSeasons]);
+
+  React.useEffect(() => {
+    fetch(`${TRAKT_API_URL_BASE}/search/tmdb/${seriesId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "trakt-api-version": "2",
+        "trakt-api-key": TRAKT_API_KEY
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        const showResult = res.find((item: any) => item.type === "show");
+        showResult && updateTraktId(showResult.show.ids.trakt);
+      });
+    // .then((res: TraktIds) => );
+  }, [seriesId]);
 
   const getRandomEpisode = function(): {
     season: Season;
@@ -68,11 +87,6 @@ const ShowPage: React.FC = () => {
           selectedEpisodeSeason.season_number &&
         showInfo.last_episode_to_air.episode_number < episodeCounter)
     ) {
-      console.log(
-        randomEpisodeNumber,
-        numPotentialEpisodes,
-        `S${selectedEpisodeSeason?.season_number}E${episodeCounter}`
-      );
       return getRandomEpisode();
     }
 
@@ -145,7 +159,7 @@ const ShowPage: React.FC = () => {
                 <EpisodeCard {...randomEpisode} />
               </Box>
             )}
-            <SimilarShows seriesId={showInfo.id} />
+            {traktId && <SimilarShows traktId={traktId} />}
           </Box>
         </>
       )}

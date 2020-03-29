@@ -1,23 +1,28 @@
+export type TraktIds = {
+  trakt: number;
+  slug: string;
+  tbdb: number;
+  imdb: number;
+  tmdb: number;
+  tvrage: number;
+};
+
 export type TraktShow = {
   title: string;
   year: number;
-  ids: {
-    trakt: number;
-    slug: string;
-    tbdb: number;
-    imdb: number;
-    tmdb: number;
-    tvrage: number;
-  };
+  ids: TraktIds;
 };
 
-export type TraktShowWithStats = {
+export type ShowStats = {
   watcher_count?: number;
   watchers?: number;
   play_count?: number;
   collected_count?: number;
   collector_count?: number;
-  show: TraktShow;
 };
+
+export type TraktShowWithStats = {
+  show: TraktShow;
+} & ShowStats;
 
 export type Episode = {};

@@ -15,14 +15,17 @@ import {
   MOVIEDB_API_URL_BASE,
   MOVIEDB_API_KEY
 } from "../../declarations/constants";
+import { TraktShow } from "../../declarations/trakt-types";
 
-const ShowCard: React.FC<{ showId: number }> = ({ showId }) => {
+const ShowCard: React.FC<{ traktShow: TraktShow }> = ({ traktShow }) => {
   const [show, updateShow] = React.useState<SeriesDetail>();
   React.useEffect(() => {
-    fetch(`${MOVIEDB_API_URL_BASE}/tv/${showId}?api_key=${MOVIEDB_API_KEY}`)
+    fetch(
+      `${MOVIEDB_API_URL_BASE}/tv/${traktShow.ids.tmdb}?api_key=${MOVIEDB_API_KEY}`
+    )
       .then(res => res.json())
       .then(updateShow);
-  }, [showId]);
+  }, [traktShow]);
 
   return show ? (
     <Box width={["100%", "30%"]} my={1}>
