@@ -15,7 +15,7 @@ const FILTERS: FilterObj[] = [
 
 const HomePage: React.FC = () => {
   const [filterIndex, toggleFilterIndex] = React.useState<number>(0);
-  const [timeFrame, toggleTimeFrame] = React.useState<TimeFrame>("All");
+  const [timeFrame, toggleTimeFrame] = React.useState<TimeFrame>("Weekly");
 
   return (
     <Layout>
@@ -42,7 +42,9 @@ const HomePage: React.FC = () => {
             filterIndex={filterIndex}
             toggleFilterIndex={toggleFilterIndex}
           />
-          <TimeSlider toggleTimeFrame={toggleTimeFrame} />
+          {filterIndex === 0 && (
+            <TimeSlider toggleTimeFrame={toggleTimeFrame} />
+          )}
         </Box>
         <ShowList filter={FILTERS[filterIndex].filter} timeFrame={timeFrame} />
       </Box>

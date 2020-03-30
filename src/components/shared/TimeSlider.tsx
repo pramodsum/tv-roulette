@@ -7,7 +7,7 @@ const TIME_FRAMES: TimeFrame[] = ["Weekly", "Monthly", "Yearly", "All"];
 const TimeSlider: React.FC<{
   toggleTimeFrame: React.Dispatch<TimeFrame>;
 }> = ({ toggleTimeFrame }) => {
-  const [timeFrameIndex, updateTimeFrameIndex] = React.useState<number>(3);
+  const [timeFrameIndex, updateTimeFrameIndex] = React.useState<number>(0);
   return (
     <Slider
       style={{ maxWidth: "300px" }}

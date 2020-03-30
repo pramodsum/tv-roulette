@@ -15,7 +15,7 @@ const ShowList: React.FC<{
 
   React.useEffect(() => {
     fetch(
-      `${TRAKT_API_URL_BASE}/shows/${filter}/?period=${timeFrame.toLowerCase()}`,
+      `${TRAKT_API_URL_BASE}/shows/${filter}/?period=${timeFrame.toLowerCase()}&limit=21`,
       {
         headers: {
           "Content-Type": "application/json",

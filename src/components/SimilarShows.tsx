@@ -10,7 +10,7 @@ const SimilarShows: React.FC = () => {
   const [shows, updateShows] = React.useState<TraktShow[]>([]);
 
   React.useEffect(() => {
-    fetch(`${TRAKT_API_URL_BASE}/shows/${slug}/related`, {
+    fetch(`${TRAKT_API_URL_BASE}/shows/${slug}/related?extended=full`, {
       headers: {
         "Content-Type": "application/json",
         "trakt-api-version": "2",
