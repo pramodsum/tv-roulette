@@ -5,7 +5,8 @@ import {
   withStyles,
   Theme,
   fade,
-  Box
+  Box,
+  Avatar
 } from "@material-ui/core";
 import MaterialAutocomplete from "@material-ui/lab/Autocomplete";
 import Search from "@material-ui/icons/Search";
@@ -17,7 +18,9 @@ import { useHistory } from "react-router-dom";
 
 import {
   MOVIEDB_API_KEY,
-  MOVIEDB_API_URL_BASE
+  MOVIEDB_API_URL_BASE,
+  TRAKT_API_URL_BASE,
+  TRAKT_API_KEY
 } from "../../../declarations/constants";
 import { Series } from "../../../declarations/moviedb-types";
 
@@ -90,15 +93,28 @@ const AutocompleteInput: React.FC = () => {
     [input]
   );
 
+  const onShowSelect = (_e: any, show: Series) => {
+    fetch(`${TRAKT_API_URL_BASE}/search/tmdb/${show.id}?type=show`, {
+      headers: {
+        "Content-Type": "application/json",
+        "trakt-api-version": "2",
+        "trakt-api-key": TRAKT_API_KEY
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.length === 0) return;
+        const traktShow = res[0];
+        history.push(`/${traktShow.show.ids.slug}/${show.id}`);
+      });
+  };
+
   return (
     <Autocomplete
-      autoSelect
       autoComplete
       clearOnEscape
       includeInputInList
-      onChange={(_e: any, show: Series) => {
-        history.push(`/show/${show.id}`);
-      }}
+      onChange={onShowSelect}
       getOptionLabel={(option: Series) => option.name}
       options={options}
       filterOptions={(
@@ -114,7 +130,15 @@ const AutocompleteInput: React.FC = () => {
         const parts = parse(option.name, matches);
 
         return (
-          <Box>
+          <Box display="flex" alignItems="center">
+            {option.poster_path && (
+              <Box mr={1}>
+                <Avatar
+                  alt={option.name}
+                  src={`https://image.tmdb.org/t/p/w500_and_h282_face${option.poster_path}`}
+                />
+              </Box>
+            )}
             {parts.map((part: any, index: number) => (
               <span
                 key={index}

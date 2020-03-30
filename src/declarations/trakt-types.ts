@@ -13,6 +13,8 @@ export type TraktShow = {
   ids: TraktIds;
 };
 
+export type TraktExtended = { rating: number } & TraktShow;
+
 export type ShowStats = {
   watcher_count?: number;
   watchers?: number;
