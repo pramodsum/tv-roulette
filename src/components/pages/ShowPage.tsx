@@ -9,13 +9,16 @@ import {
 } from "../../declarations/moviedb-types";
 import {
   MOVIEDB_API_KEY,
-  MOVIEDB_API_URL_BASE
+  MOVIEDB_API_URL_BASE,
+  TRAKT_API_URL_BASE,
+  TRAKT_API_KEY
 } from "../../declarations/constants";
 import { useParams } from "react-router-dom";
 import Layout from "../shared/layout/Layout";
 import MediaHeader from "../MediaHeader";
 import EpisodeCard from "../shared/EpisodeCard";
 import SimilarShows from "../SimilarShows";
+import { TraktExtended } from "../../declarations/trakt-types";
 
 const getRandomInt = (max: number) =>
   Math.floor(Math.random() * Math.floor(max));
@@ -25,6 +28,7 @@ const ShowPage: React.FC = () => {
   const [showInfo, updateShowInfo] = React.useState<SeriesDetail>();
   const [selectedSeasons, updateSelectedSeasons] = React.useState<Season[]>([]);
   const [randomEpisode, updateRandomEpisode] = React.useState<Episode>();
+  const [traktShow, updateTraktShow] = React.useState<TraktExtended>();
 
   const selectAllRegularSeasons = React.useCallback((res: SeriesDetail) => {
     // Default select all regular seasons
@@ -39,6 +43,22 @@ const ShowPage: React.FC = () => {
       .then(res => {
         updateShowInfo(res);
         selectAllRegularSeasons(res);
+      });
+
+    fetch(
+      `${TRAKT_API_URL_BASE}/search/tmdb/${tmdbId}?type=show&extended=full`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "trakt-api-version": "2",
+          "trakt-api-key": TRAKT_API_KEY
+        }
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        if (res.length === 0) return;
+        updateTraktShow(res[0].show);
       });
   }, [tmdbId, selectAllRegularSeasons]);
 
@@ -102,9 +122,9 @@ const ShowPage: React.FC = () => {
 
   return (
     <Layout>
-      {showInfo && (
+      {showInfo && traktShow && (
         <>
-          <MediaHeader {...showInfo} />
+          <MediaHeader {...traktShow} {...showInfo} />
           <Box p={3} maxWidth="1000px" mx="auto">
             <Box
               display="flex"

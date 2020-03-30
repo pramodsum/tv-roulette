@@ -37,10 +37,8 @@ const EpisodeCard: React.FC<Episode> = props => (
             prependSubtitle
           />
         </Box>
-        <Typography gutterBottom variant="body1">
-          <Box fontWeight="600">
-            Season {props.season_number} Episode {props.episode_number}
-          </Box>
+        <Typography gutterBottom variant="body1" style={{ fontWeight: 600 }}>
+          Season {props.season_number} Episode {props.episode_number}
         </Typography>
         <Typography gutterBottom variant="body2">
           {dayjs(props.air_date).fromNow}

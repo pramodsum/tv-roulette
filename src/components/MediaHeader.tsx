@@ -6,6 +6,7 @@ import RelativeTime from "dayjs/plugin/relativeTime";
 
 import { SeriesDetail } from "../declarations/moviedb-types";
 import CircularRating from "./shared/CircularRating";
+import { TraktExtended } from "../declarations/trakt-types";
 
 const MediaContainer = styled(CardMedia)({
   "&::before": {
@@ -58,10 +59,10 @@ const Detail: React.FC<{ title: string; value: string }> = ({
   </Box>
 );
 
-const MediaHeader: React.FC<SeriesDetail> = ({
+const MediaHeader: React.FC<SeriesDetail & TraktExtended> = ({
   name,
-  vote_average,
   genres,
+  rating,
   overview,
   episode_run_time,
   last_air_date,
@@ -104,7 +105,9 @@ const MediaHeader: React.FC<SeriesDetail> = ({
                   alignItems="center"
                   width={["100%", "auto"]}
                 >
-                  <CircularRating voteAverage={vote_average * 10} />
+                  <CircularRating
+                    voteAverage={parseInt((rating * 10).toFixed(0))}
+                  />
                 </Box>
               </Box>
             </Typography>
