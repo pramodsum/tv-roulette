@@ -19,6 +19,7 @@ import { TraktShow } from "../../declarations/trakt-types";
 
 const ShowCard: React.FC<{ traktShow: TraktShow }> = ({ traktShow }) => {
   const [show, updateShow] = React.useState<SeriesDetail>();
+
   React.useEffect(() => {
     fetch(
       `${MOVIEDB_API_URL_BASE}/tv/${traktShow.ids.tmdb}?api_key=${MOVIEDB_API_KEY}`
@@ -32,7 +33,7 @@ const ShowCard: React.FC<{ traktShow: TraktShow }> = ({ traktShow }) => {
       <Card>
         <CardActionArea>
           <Link
-            to={`/show/${show.id}`}
+            to={`${traktShow.ids.slug}/${traktShow.ids.tmdb}`}
             style={{ textDecoration: "none", color: "black" }}
           >
             <CardMedia

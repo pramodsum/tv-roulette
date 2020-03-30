@@ -26,7 +26,7 @@ export default () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/show/:seriesId" component={ShowPage} />
+          <Route path="/:slug/:tmdbId" component={ShowPage} />
         </Switch>
       </BrowserRouter>
       {/* <Routes /> */}

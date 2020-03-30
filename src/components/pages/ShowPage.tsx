@@ -9,9 +9,7 @@ import {
 } from "../../declarations/moviedb-types";
 import {
   MOVIEDB_API_KEY,
-  MOVIEDB_API_URL_BASE,
-  TRAKT_API_URL_BASE,
-  TRAKT_API_KEY
+  MOVIEDB_API_URL_BASE
 } from "../../declarations/constants";
 import { useParams } from "react-router-dom";
 import Layout from "../shared/layout/Layout";
@@ -23,11 +21,10 @@ const getRandomInt = (max: number) =>
   Math.floor(Math.random() * Math.floor(max));
 
 const ShowPage: React.FC = () => {
-  const { seriesId } = useParams();
+  const { tmdbId } = useParams();
   const [showInfo, updateShowInfo] = React.useState<SeriesDetail>();
   const [selectedSeasons, updateSelectedSeasons] = React.useState<Season[]>([]);
   const [randomEpisode, updateRandomEpisode] = React.useState<Episode>();
-  const [traktId, updateTraktId] = React.useState<number>();
 
   const selectAllRegularSeasons = React.useCallback((res: SeriesDetail) => {
     // Default select all regular seasons
@@ -37,29 +34,13 @@ const ShowPage: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    fetch(`${MOVIEDB_API_URL_BASE}/tv/${seriesId}?api_key=${MOVIEDB_API_KEY}`)
+    fetch(`${MOVIEDB_API_URL_BASE}/tv/${tmdbId}?api_key=${MOVIEDB_API_KEY}`)
       .then(res => res.json())
       .then(res => {
         updateShowInfo(res);
         selectAllRegularSeasons(res);
       });
-  }, [seriesId, selectAllRegularSeasons]);
-
-  React.useEffect(() => {
-    fetch(`${TRAKT_API_URL_BASE}/search/tmdb/${seriesId}`, {
-      headers: {
-        "Content-Type": "application/json",
-        "trakt-api-version": "2",
-        "trakt-api-key": TRAKT_API_KEY
-      }
-    })
-      .then(res => res.json())
-      .then(res => {
-        const showResult = res.find((item: any) => item.type === "show");
-        showResult && updateTraktId(showResult.show.ids.trakt);
-      });
-    // .then((res: TraktIds) => );
-  }, [seriesId]);
+  }, [tmdbId, selectAllRegularSeasons]);
 
   const getRandomEpisode = function(): {
     season: Season;
@@ -102,7 +83,7 @@ const ShowPage: React.FC = () => {
     if (!season || !episodeNumber) return;
 
     fetch(
-      `${MOVIEDB_API_URL_BASE}/tv/${seriesId}/season/${season.season_number}?api_key=${MOVIEDB_API_KEY}`
+      `${MOVIEDB_API_URL_BASE}/tv/${tmdbId}/season/${season.season_number}?api_key=${MOVIEDB_API_KEY}`
     )
       .then(res => res.json())
       .then(res => updateRandomEpisode(res.episodes[episodeNumber]));
@@ -124,7 +105,7 @@ const ShowPage: React.FC = () => {
       {showInfo && (
         <>
           <MediaHeader {...showInfo} />
-          <Box p={3} maxWidth="1000px">
+          <Box p={3} maxWidth="1000px" mx="auto">
             <Box
               display="flex"
               flexDirection={["column", "row"]}
@@ -159,7 +140,7 @@ const ShowPage: React.FC = () => {
                 <EpisodeCard {...randomEpisode} />
               </Box>
             )}
-            {traktId && <SimilarShows traktId={traktId} />}
+            <SimilarShows />
           </Box>
         </>
       )}

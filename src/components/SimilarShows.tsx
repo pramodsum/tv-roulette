@@ -3,12 +3,14 @@ import { Box, Typography } from "@material-ui/core";
 import ShowCard from "./shared/ShowCard";
 import { TRAKT_API_URL_BASE, TRAKT_API_KEY } from "../declarations/constants";
 import { TraktShow } from "../declarations/trakt-types";
+import { useParams } from "react-router-dom";
 
-const SimilarShows: React.FC<{ traktId: number }> = ({ traktId }) => {
+const SimilarShows: React.FC = () => {
+  const { slug } = useParams();
   const [shows, updateShows] = React.useState<TraktShow[]>([]);
 
   React.useEffect(() => {
-    fetch(`${TRAKT_API_URL_BASE}/shows/${traktId}/related`, {
+    fetch(`${TRAKT_API_URL_BASE}/shows/${slug}/related`, {
       headers: {
         "Content-Type": "application/json",
         "trakt-api-version": "2",
@@ -17,7 +19,7 @@ const SimilarShows: React.FC<{ traktId: number }> = ({ traktId }) => {
     })
       .then(res => res.json())
       .then(updateShows);
-  }, [traktId]);
+  }, [slug]);
 
   return (
     <Box>
