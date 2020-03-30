@@ -1,7 +1,10 @@
 import React from "react";
 import { Box } from "@material-ui/core";
 import ShowCard from "../shared/ShowCard";
-import { TraktShow, TraktShowWithStats } from "../../declarations/trakt-types";
+import {
+  TraktShowWithStats,
+  TraktExtended
+} from "../../declarations/trakt-types";
 import {
   TRAKT_API_KEY,
   TRAKT_API_URL_BASE
@@ -11,11 +14,11 @@ const ShowList: React.FC<{
   filter: string;
   timeFrame: string;
 }> = ({ filter, timeFrame }) => {
-  const [shows, updateShows] = React.useState<TraktShow[]>([]);
+  const [shows, updateShows] = React.useState<TraktExtended[]>([]);
 
   React.useEffect(() => {
     fetch(
-      `${TRAKT_API_URL_BASE}/shows/${filter}/?period=${timeFrame.toLowerCase()}&limit=21`,
+      `${TRAKT_API_URL_BASE}/shows/${filter}/?period=${timeFrame.toLowerCase()}&limit=21&extended=full`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +43,7 @@ const ShowList: React.FC<{
       mx="auto"
       justifyContent="space-between"
     >
-      {shows?.map((show: TraktShow) => (
+      {shows?.map((show: TraktExtended) => (
         <ShowCard key={show.ids.trakt} traktShow={show} />
       ))}
     </Box>

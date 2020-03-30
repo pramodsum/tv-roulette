@@ -15,9 +15,9 @@ import {
   MOVIEDB_API_URL_BASE,
   MOVIEDB_API_KEY
 } from "../../declarations/constants";
-import { TraktShow } from "../../declarations/trakt-types";
+import { TraktExtended } from "../../declarations/trakt-types";
 
-const ShowCard: React.FC<{ traktShow: TraktShow }> = ({ traktShow }) => {
+const ShowCard: React.FC<{ traktShow: TraktExtended }> = ({ traktShow }) => {
   const [show, updateShow] = React.useState<SeriesDetail>();
 
   React.useEffect(() => {
@@ -28,7 +28,7 @@ const ShowCard: React.FC<{ traktShow: TraktShow }> = ({ traktShow }) => {
       .then(updateShow);
   }, [traktShow]);
 
-  return show ? (
+  return show && show.poster_path ? (
     <Box width={["100%", "30%"]} my={1}>
       <Card>
         <CardActionArea>
@@ -49,7 +49,7 @@ const ShowCard: React.FC<{ traktShow: TraktShow }> = ({ traktShow }) => {
                 <Chip
                   color="primary"
                   style={{ marginTop: "2px", marginLeft: "6px" }}
-                  label={`${show.vote_average * 10}%`}
+                  label={`${(traktShow.rating * 10).toFixed(0)}%`}
                 />
               </Box>
             </CardContent>

@@ -3,7 +3,6 @@ import {
   TextField,
   createStyles,
   withStyles,
-  Theme,
   fade,
   Box,
   Avatar
@@ -32,21 +31,12 @@ const SearchIcon = withStyles(
   })
 )(Search);
 
-const Input = withStyles((theme: Theme) =>
+const Input = withStyles(
   createStyles({
     root: {
       background: fade("#fff", 0.15),
       borderRadius: "4px",
       marginTop: "4px"
-    },
-    input: {
-      color: "white !important",
-      // vertical padding + font size from searchIcon
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("md")]: {
-        width: "20ch"
-      }
     }
   })
 )(TextField);

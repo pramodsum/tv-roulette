@@ -111,7 +111,7 @@ const MediaHeader: React.FC<SeriesDetail> = ({
             <Box mb={2} display="flex">
               {genres.map(genre => (
                 <Box mr={1} key={genre.id}>
-                  <Chip color="inherit" label={genre.name} />
+                  <Chip label={genre.name} />
                 </Box>
               ))}
             </Box>
@@ -127,8 +127,8 @@ const MediaHeader: React.FC<SeriesDetail> = ({
             <Typography variant="h5">
               <Box fontWeight="700">Overview</Box>
             </Typography>
-            <Typography variant="body1">
-              <Box fontWeight="200">{overview}</Box>
+            <Typography variant="body1" style={{ fontWeight: 200 }}>
+              {overview}
             </Typography>
             <Typography></Typography>
           </Box>
