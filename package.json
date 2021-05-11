@@ -20,7 +20,7 @@
     "autosuggest-highlight": "^3.1.1",
     "dayjs": "^1.8.23",
     "gh-pages": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "match-sorter": "^4.1.0",
     "material-ui-image": "^3.2.3",
     "react": "^16.13.1",
